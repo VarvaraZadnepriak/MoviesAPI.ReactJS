@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "Movie API Server",
   "main": "src/index.js",
-  "author": "Anatoli Huseu (avg.tolik@gmail.com)",
   "license": "MIT",
   "scripts": {
     "start": "node ./src/index.js",
