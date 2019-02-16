@@ -1,0 +1,38 @@
+{
+  "name": "movie-api-server",
+  "version": "0.1.0",
+  "description": "Movie API Server",
+  "main": "src/index.js",
+  "author": "Anatoli Huseu (avg.tolik@gmail.com)",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "watch": "nodemon --exec npm run start",
+    "lint": "npm run lint:styles && npm run lint:js",
+    "lint:js": "eslint ./src",
+    "lint:styles": "stylelint 'src/**/*.css'",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.18.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "jest": "^22.4.2",
+    "nodemon": "^1.17.1",
+    "stylelint": "^9.1.1",
+    "stylelint-config-standard": "^18.2.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "kcors": "^2.2.1",
+    "koa": "^2.5.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.4.0",
+    "koa2-swagger-ui": "^2.8.0",
+    "lodash": "^4.17.5"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "env": {
+    "jest": true,
+    "browser": true
+  },
+  "extends": "standard",
+  "rules": {
+    "comma-dangle": [2, "always-multiline"]
+  }
+}
