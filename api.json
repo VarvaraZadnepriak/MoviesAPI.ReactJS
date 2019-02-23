@@ -9,7 +9,7 @@
       "url": "http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT"
     }
   },
-  "host": "reactjs-cdp.azurewebsites.net",
+  "host": "reactjs-cdp.herokuapp.com",
   "basePath": "/",
   "schemes": [
     "https"
