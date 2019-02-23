@@ -18,8 +18,8 @@ const app = new Koa()
   )
   .use(updateContext)
   .use(parseQuery)
-  .use(bodyParser())
   .use(api.routes())
+  .use(bodyParser())
   .use(api.allowedMethods())
 
 module.exports = exports = app
