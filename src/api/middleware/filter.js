@@ -6,7 +6,7 @@ const filter = (ctx, next) => {
   if (parsedGenres && parsedGenres.length) {
     const filterLength = parsedGenres.length
     const filterMap = parsedGenres.reduce(
-      (prev, curr) => Object.assign(prev, { [curr.toLowerCase()]: true }),
+      (prev, curr) => Object.assign(prev, { [curr.toLowerCase().trim()]: true }),
       {}
     )
 
@@ -14,7 +14,7 @@ const filter = (ctx, next) => {
       const array = item.genres || []
 
       let count = array.reduce(
-        (prev, curr) => prev + (filterMap[curr.toLowerCase()] ? 1 : 0),
+        (prev, curr) => prev + (filterMap[curr.toLowerCase().trim()] ? 1 : 0),
         0
       )
 
