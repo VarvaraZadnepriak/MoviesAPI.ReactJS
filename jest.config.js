@@ -9,4 +9,5 @@ module.exports = {
     '!src/index.js',
     '!src/scraper.js',
   ],
+  testEnvironment: 'node',
 }

@@ -32,7 +32,7 @@ describe('Middleware :: Filter', () => {
 
   it('should filter by signle genre', () => {
     const next = jest.fn()
-    defaultCtx.query.filter = ['1']
+    defaultCtx.query.filter = '1'
 
     filter(defaultCtx, next)
 
@@ -45,7 +45,7 @@ describe('Middleware :: Filter', () => {
 
   it('should filter by two genres', () => {
     const next = jest.fn()
-    defaultCtx.query.filter = ['1', '3']
+    defaultCtx.query.filter = '1,3'
 
     filter(defaultCtx, next)
 

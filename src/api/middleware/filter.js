@@ -1,16 +1,20 @@
-
 const filter = (ctx, next) => {
   const { filter } = ctx.query
 
-  if (filter && filter.length) {
-    const filterLength = filter.length
-    const filterMap = filter.reduce((prev, curr) => Object.assign(prev, { [curr]: true }), {})
+  const parsedGenres = filter && filter.split(',')
 
-    ctx.state.Movies = ctx.state.Movies.filter((item) => {
+  if (parsedGenres && parsedGenres.length) {
+    const filterLength = parsedGenres.length
+    const filterMap = parsedGenres.reduce(
+      (prev, curr) => Object.assign(prev, { [curr.toLowerCase().trim()]: true }),
+      {}
+    )
+
+    ctx.state.Movies = ctx.state.Movies.filter(item => {
       const array = item.genres || []
 
       let count = array.reduce(
-        (prev, curr) => prev + (filterMap[curr] ? 1 : 0),
+        (prev, curr) => prev + (filterMap[curr.toLowerCase().trim()] ? 1 : 0),
         0
       )
 
