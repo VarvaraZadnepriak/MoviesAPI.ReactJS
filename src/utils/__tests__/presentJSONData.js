@@ -5,7 +5,7 @@ describe('Utilites :: presentJSONData', function () {
 
   beforeEach(() => {
     defaultData = {
-      fields: [{a: 1}],
+      fields: [{ a: 1 }],
       a: '1',
       b: 2,
     }

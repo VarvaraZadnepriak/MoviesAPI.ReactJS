@@ -1,0 +1,272 @@
+openapi: 3.0.0
+info:
+  version: 0.1.0
+  title: Preference public API
+  description: Preference public API
+  license:
+    name: MIT
+    url: http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT
+paths:
+  /movies:
+    get:
+      description: Get movies list
+      summary: Get movies list
+      tags:
+        - movie
+      operationId: MoviesGet
+      parameters:
+        - in: query
+          name: sortBy
+          schema:
+            type: string
+          description: Field to sort by
+        - in: query
+          name: sortOrder
+          schema:
+            type: string
+          description: Value to define sort direction - 'desc' or 'asc'
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Search value
+        - in: query
+          name: searchBy
+          description: Type of search (title or genres)
+          schema:
+            type: strgin
+            enum:
+              - title
+              - genres
+        - in: query
+          name: filter
+          schema:
+            type: string
+            items:
+              type: string
+          description: Array to filter by genres
+        - in: query
+          name: offset
+          schema:
+            type: string
+          description: Offset in result array for pagination
+        - in: query
+          name: limit
+          schema:
+            type: string
+          description: Limit amount of items in result array for pagination
+      responses:
+        "200":
+          description: Movies list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MoviesResponse"
+
+    post:
+      description: Create movie
+      summary: Create movie
+      tags:
+        - movie
+      operationId: MoviesCreate
+      requestBody:
+        description: Movie to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovieBase'
+      responses:
+        "201":
+          description: Movie object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Movie"
+        "400":
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+
+    put:
+      description: Update movie
+      summary: Update movie by id
+      tags:
+        - movie
+      operationId: MoviesUpdateById
+      requestBody:
+        description: Movie to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Movie'
+      responses:
+        "200":
+          description: Movie object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Movie"
+        "404":
+          description: Movie not found
+        "400":
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+
+  "/movies/{id}":
+    get:
+      description: Get movie by id
+      summary: Get movie by id
+      tags:
+        - movie
+      operationId: MoviesGetById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Movie unique identifier
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Movie object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Movie"
+        "404":
+          description: Movie not found
+  
+    delete:
+      description: Remove movie by id
+      summary: Remove movie by id
+      tags:
+        - movie
+      operationId: MoviesDeleteById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Movie unique identifier
+          schema:
+            type: string
+      responses:
+        "204":
+          description: No response
+        "404":
+          description: Movie not found
+      
+servers:
+  - url: https://reactjs-cdp.herokuapp.com/
+  - url: http://localhost:4000/
+components:
+  schemas:
+    MoviesResponse:
+      title: MoviesResponse
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Movie"
+        total:
+          type: number
+        offset:
+          type: number
+        limit:
+          type: number
+
+    MovieBase:
+      title: MovieBase
+      type: object
+      required:
+        - title
+        - poster_path
+        - overview
+        - genres
+        - runtime
+      properties:
+        title:
+          type: string
+          description: Movie title
+          example: La La Land
+        tagline:
+          type: string
+          description: Movie tagline
+          example: Here's to the fools who dream.
+        vote_average:
+          type: number
+          description: Movie average raiting
+          example: 7.9
+        vote_count:
+          type: integer
+          description: Total count of votes for the movie
+          example: 6782
+        release_date:
+          type: string
+          description: Movie release date
+          example: '2016-12-29'
+        poster_path:
+          type: string
+          description: Url to the poster image
+          example: https://image.tmdb.org/t/p/w500/ylXCdC106IKiarftHkcacasaAcb.jpg
+        overview:
+          type: string
+          description: Short description of the movie
+          example: Mia, an aspiring actress, serves lattes to movie stars in between auditions and Sebastian, a jazz musician, scrapes by playing cocktail party gigs in dingy bars, but as success mounts they are faced with decisions that begin to fray the fragile fabric of their love affair, and the dreams they worked so hard to maintain in each other threaten to rip them apart.
+        budget:
+          type: integer
+          description: Movie production budget
+          format: int32
+          minimum: 0
+          example: 30000000
+        revenue:
+          type: integer
+          description: Movie revenue
+          format: int64
+          minimum: 0
+          example: 445435700
+        runtime:
+          type: integer
+          description: Movie duration time
+          format: int32
+          minimum: 0
+          example: 128
+        genres:
+          type: array
+          description: List of genres
+          items:
+            type: string
+          example: [ 'Comedy', 'Drama', 'Romance' ]
+
+    Movie:
+      title: Movie
+      allOf:
+        - $ref: '#/components/schemas/MovieBase'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: integer
+              description: Movie unique identifier
+              example: 313369
+
+    BadRequestError:
+      title: Bad Request Error
+      type: object
+      properties:
+        messages:
+          type: array
+          description: List of error messages
+          items:
+            type: string
+          example: [ "\"runtime\" must be an integer" ]
+
+

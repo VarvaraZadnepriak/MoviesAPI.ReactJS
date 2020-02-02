@@ -1,9 +1,4 @@
-const Movies = require('../data/films.json')
-
-const updateContext = (ctx, next) => {
-  ctx.state.Movies = Movies
-  next()
-}
+const generateId = () => Date.now()
 
 const parseQuery = (ctx, next) => {
   ctx.query.offset = (ctx.query.offset && parseInt(ctx.query.offset, 10)) || 0
@@ -13,6 +8,6 @@ const parseQuery = (ctx, next) => {
 }
 
 module.exports = {
+  generateId,
   parseQuery,
-  updateContext,
 }

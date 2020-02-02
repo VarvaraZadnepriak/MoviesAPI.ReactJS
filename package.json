@@ -7,31 +7,28 @@
   "scripts": {
     "start": "node ./src/index.js",
     "watch": "nodemon --exec npm run start",
-    "lint": "npm run lint:styles && npm run lint:js",
-    "lint:js": "eslint ./src",
-    "lint:styles": "stylelint 'src/**/*.css'",
+    "lint": "eslint ./src",
     "test": "jest"
   },
   "devDependencies": {
-    "babel-preset-env": "^1.6.1",
-    "eslint": "^4.18.1",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-import": "^2.9.0",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "jest": "^24.7.1",
-    "nodemon": "^1.17.1",
-    "stylelint": "^9.1.1",
-    "stylelint-config-standard": "^18.2.0"
+    "@babel/preset-env": "^7.8.4",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "jest": "^25.1.0",
+    "nodemon": "^2.0.2"
   },
   "dependencies": {
-    "axios": "^0.18.0",
-    "kcors": "^2.2.1",
-    "koa": "^2.5.0",
-    "koa-bodyparser": "^4.2.0",
-    "koa-router": "^7.4.0",
-    "koa2-swagger-ui": "^2.8.0",
-    "lodash": "^4.17.5"
+    "@hapi/joi": "^17.1.0",
+    "axios": "^0.19.2",
+    "kcors": "^2.2.2",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^8.0.6",
+    "koa2-swagger-ui": "^2.16.0",
+    "lodash": "^4.17.15"
   }
 }

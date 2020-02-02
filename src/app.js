@@ -3,8 +3,9 @@ const bodyParser = require('koa-bodyparser')
 const cors = require('kcors')
 const koaSwagger = require('koa2-swagger-ui')
 
-const { updateContext, parseQuery } = require('./utils')
-const api = require('./api')
+const { parseQuery } = require('./utils')
+const swaggerApi = require('./api/swagger.api')
+const movieApi = require('./api/movie.api')
 
 const app = new Koa()
   .use(cors())
@@ -12,14 +13,15 @@ const app = new Koa()
     koaSwagger({
       routePrefix: '/api-docs',
       swaggerOptions: {
-        url: '/api.json',
+        url: '/swagger.yaml',
       },
     }),
   )
-  .use(updateContext)
-  .use(parseQuery)
-  .use(api.routes())
   .use(bodyParser())
-  .use(api.allowedMethods())
+  .use(parseQuery)
+  .use(swaggerApi.routes())
+  .use(movieApi.routes())
+  .use(swaggerApi.allowedMethods())
+  .use(movieApi.allowedMethods())
 
 module.exports = exports = app

@@ -37,7 +37,7 @@ const getMoviesByPage = async (page) => {
 }
 
 const getMovies = async (pages) => {
-  const filePath = path.join(__dirname, `data/films.json`)
+  const filePath = path.join(__dirname, 'data/movies.json')
   let movies = []
 
   for (let i = 1; i <= pages; i += 1) {
