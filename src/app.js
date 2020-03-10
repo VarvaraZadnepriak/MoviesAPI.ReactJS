@@ -20,8 +20,8 @@ const app = new Koa()
   .use(bodyParser())
   .use(parseQuery)
   .use(swaggerApi.routes())
-  .use(movieApi.routes())
   .use(swaggerApi.allowedMethods())
+  .use(movieApi.routes())
   .use(movieApi.allowedMethods())
 
 module.exports = exports = app

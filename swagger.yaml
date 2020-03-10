@@ -163,7 +163,6 @@ paths:
           description: Movie not found
       
 servers:
-  - url: https://reactjs-cdp.herokuapp.com/
   - url: http://localhost:4000/
 components:
   schemas:
