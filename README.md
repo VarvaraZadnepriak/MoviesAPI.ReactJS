@@ -1,10 +1,10 @@
-# Movies API Server [![Build Status](https://travis-ci.org/avg206/movie-api-server.svg?branch=master)](https://travis-ci.org/avg206/movie-api-server)
+# Movies API Server
 
-Simple API Server and scraper for themoviedb
+Simple API Server with transactions
 
-Find more info in `api.yml`
+Find more info in `swagger.yaml`
 
-## Get started ##
+## Get started
 
 ### Install all dependencies
 
@@ -23,3 +23,16 @@ npm run test
 ```bash
 npm run lint
 ```
+
+### Transactions
+
+After restart all modifications - edits and deletes - on original movie db are skipped,
+after restart you will work with original movie db
+
+There are two exclusions of this:
+
+1. New movies that you add to the movie db and operations over them
+2. Updated posters
+
+These operations are saved as transactions (src/data/movies.log), after each restart
+transaction data is applied to the movie db as monkey patch (original data file is not touched)

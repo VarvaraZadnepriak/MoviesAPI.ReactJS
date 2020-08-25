@@ -1,13 +1,13 @@
-const generateId = () => Date.now()
+const generateId = () => Date.now();
 
-const parseQuery = (ctx, next) => {
-  ctx.query.offset = (ctx.query.offset && parseInt(ctx.query.offset, 10)) || 0
-  ctx.query.limit = (ctx.query.limit && parseInt(ctx.query.limit, 10)) || 10
+const parseQuery = (req, res, next) => {
+    req.query.offset = (req.query.offset && parseInt(req.query.offset, 10)) || 0;
+    req.query.limit = (req.query.limit && parseInt(req.query.limit, 10)) || 10;
 
-  next()
-}
+    next();
+};
 
 module.exports = {
-  generateId,
-  parseQuery,
-}
+    generateId,
+    parseQuery
+};

@@ -1,14 +1,10 @@
-const fs = require('fs')
-const KoaRouter = require('koa-router')
+const express = require('express');
+const api = express.Router();
 
-const swaggerSpec = fs.readFileSync(`${__dirname}/../../swagger.yaml`)
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load(`${__dirname}/../../swagger.yaml`);
 
-const api = KoaRouter()
+api.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-api.get('/swagger.yaml',
-  (ctx, _next) => {
-    ctx.status = 200
-    ctx.body = swaggerSpec.toString()
-  })
-
-module.exports = exports = api
+module.exports = exports = api;

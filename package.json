@@ -1,6 +1,6 @@
 {
   "name": "movie-api-server",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Movie API Server",
   "main": "src/index.js",
   "license": "MIT",
@@ -11,24 +11,24 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.8.4",
-    "eslint": "^6.8.0",
+    "@babel/preset-env": "^7.11.0",
+    "eslint": "^7.7.0",
     "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "jest": "^25.1.0",
-    "nodemon": "^2.0.2"
+    "jest": "^26.4.0",
+    "nodemon": "^2.0.4"
   },
   "dependencies": {
-    "@hapi/joi": "^17.1.0",
     "axios": "^0.19.2",
-    "kcors": "^2.2.2",
-    "koa": "^2.11.0",
-    "koa-bodyparser": "^4.2.1",
-    "koa-router": "^8.0.6",
-    "koa2-swagger-ui": "^2.16.0",
-    "lodash": "^4.17.15"
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "joi": "^17.2.1",
+    "lodash": "^4.17.20",
+    "swagger-ui-express": "^4.1.4",
+    "yamljs": "^0.3.0"
   }
 }

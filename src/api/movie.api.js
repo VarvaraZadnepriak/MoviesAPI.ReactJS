@@ -1,88 +1,97 @@
-const KoaRouter = require('koa-router')
+const express = require('express');
 
-const { MovieBaseModel, MovieModel } = require('../models/movie.model')
-const movieCtrl = require('../controllers/movie.ctrl')
+const api = express.Router();
 
-const api = KoaRouter()
+const { MovieBaseModel, MovieModel } = require('../models/movie.model');
+const movieCtrl = require('../controllers/movie.ctrl');
 
-const validateRequestBody = (ctx, model, body) => {
-  const { error } = model.validate(body)
+const validateRequestBody = (res, model, body) => {
+    const { error } = model.validate(body);
 
-  if (error) {
-    ctx.status = 400
-    ctx.body = { messages: error.details.map((e) => e.message) }
-  } else {
-    return true
-  }
-}
-
-api.get('/movies',
-  async (ctx, _next) => {
-    const { offset, limit } = ctx.query
-    const { totalAmount, data } = await movieCtrl.getMovies(ctx.query)
-
-    ctx.status = 200
-    ctx.body = {
-      totalAmount,
-      data,
-      offset,
-      limit,
+    if (error) {
+        res.status(400).send({ messages: error.details.map((e) => e.message) });
+    } else {
+        return true;
     }
-  })
+};
 
-api.get('/movies/:id',
-  async (ctx, _next) => {
-    const id = parseInt(ctx.params.id, 10)
+api.get('/movies', async (req, res) => {
+    const { offset, limit } = req.query;
+    const { totalAmount, data } = await movieCtrl.getMovies(req.query);
 
-    const movie = await movieCtrl.getMovieById(id)
+    res.status(200).send({
+        totalAmount,
+        data,
+        offset,
+        limit
+    });
+});
+
+api.get('/movies/:id/poster', async (req, res) => {
+    const id = parseInt(req.params.id, 10);
+
+    const movie = await movieCtrl.getMoviePosterById(id);
 
     if (movie) {
-      ctx.status = 200
-      ctx.body = movie
+        res.status(200).send(movie);
     } else {
-      ctx.status = 404
+        res.sendStatus(404);
     }
-  })
+});
 
-api.delete('/movies/:id',
-  async (ctx, _next) => {
-    const id = parseInt(ctx.params.id, 10)
+api.get('/movies/:id', async (req, res) => {
+    const id = parseInt(req.params.id, 10);
 
-    const removedCount = await movieCtrl.deleteMovie(id)
+    const movie = await movieCtrl.getMovieById(id);
 
-    ctx.status = removedCount ? 204 : 404
-  })
-
-api.post('/movies',
-  async (ctx, _next) => {
-    const movie = ctx.request.body
-
-    if (!validateRequestBody(ctx, MovieBaseModel, movie)) {
-      return
+    if (movie) {
+        res.status(200).send(movie);
+    } else {
+        res.sendStatus(404);
     }
+});
 
-    const newMovie = await movieCtrl.addMovie(movie)
+api.delete('/movies/:id', async (req, res) => {
+    const id = parseInt(req.params.id, 10);
 
-    ctx.status = 201
-    ctx.body = newMovie
-  })
+    const removedCount = await movieCtrl.deleteMovie(id);
 
-api.put('/movies',
-  async (ctx, _next) => {
-    const movie = ctx.request.body
+    res.sendStatus(removedCount ? 204 : 404);
+});
 
-    if (!validateRequestBody(ctx, MovieModel, movie)) {
-      return
+api.post('/movies', async (req, res) => {
+    const movie = req.body;
+
+    if (!validateRequestBody(res, MovieBaseModel, movie)) {
+        return;
     }
 
-    const updatedMovie = await movieCtrl.updateMovie(movie)
+    const newMovie = await movieCtrl.addMovie(movie);
+
+    res.status(201).send(newMovie);
+});
+
+api.put('/movies', async (req, res) => {
+    const movie = req.body;
+
+    if (!validateRequestBody(res, MovieModel, movie)) {
+        return;
+    }
+
+    const updatedMovie = await movieCtrl.updateMovie(movie);
 
     if (updatedMovie) {
-      ctx.status = 200
-      ctx.body = updatedMovie
+        res.status(200).send(updatedMovie);
     } else {
-      ctx.status = 404
+        res.sendStatus(404);
     }
-  })
+});
 
-module.exports = exports = api
+async function start() {
+    await movieCtrl.loadMovies();
+}
+
+module.exports = {
+    movieApi: api,
+    start
+};

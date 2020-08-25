@@ -1,7 +1,23 @@
-const app = require('./app')
+const killProcessByProt = require('./utils/kill-server');
 
-const port = process.env.PORT || 4000
+console.log(`movieAPI: preparing`);
 
-app.listen(port, () => {
-  console.log(`Listening on ${port}`)
-})
+const { app, start } = require('./app');
+console.log('movieAPI: server prepared');
+
+const port = process.argv[2] || 4000;
+
+killProcessByProt(port, console.log)
+    .then(() => {
+        console.log('movieAPI: load transactions');
+        return start();
+    })
+    .then(() => {
+        console.log(`movieAPI: ready to start`);
+        app.listen(port, () => {
+            console.log(`movieAPI: listening on ${port}`);
+        });
+    })
+    .catch((err) => {
+        console.log(`movieAPI: can't start: ${err.message}`);
+    });

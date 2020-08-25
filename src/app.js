@@ -1,27 +1,21 @@
-const Koa = require('koa')
-const bodyParser = require('koa-bodyparser')
-const cors = require('kcors')
-const koaSwagger = require('koa2-swagger-ui')
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
-const { parseQuery } = require('./utils')
-const swaggerApi = require('./api/swagger.api')
-const movieApi = require('./api/movie.api')
+const { parseQuery } = require('./utils');
+const swaggerApi = require('./api/swagger.api');
+const { movieApi, start } = require('./api/movie.api');
 
-const app = new Koa()
-  .use(cors())
-  .use(
-    koaSwagger({
-      routePrefix: '/api-docs',
-      swaggerOptions: {
-        url: '/swagger.yaml',
-      },
-    }),
-  )
-  .use(bodyParser())
-  .use(parseQuery)
-  .use(swaggerApi.routes())
-  .use(swaggerApi.allowedMethods())
-  .use(movieApi.routes())
-  .use(movieApi.allowedMethods())
+const app = express();
 
-module.exports = exports = app
+app.use(cors({ credentials: true, origin: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(parseQuery);
+app.use(swaggerApi);
+app.use(movieApi);
+
+module.exports = {
+    app,
+    start
+};
