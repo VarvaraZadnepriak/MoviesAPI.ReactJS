@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@hapi/joi": "^17.1.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "kcors": "^2.2.2",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1",
