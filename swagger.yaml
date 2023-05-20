@@ -161,7 +161,25 @@ paths:
           description: No response
         "404":
           description: Movie not found
-      
+  /genres:
+    get:
+      description: Get list of genres taken from movies
+      summary: Get list of genres
+      tags:
+        - genre
+      operationId: GenresGet
+      responses:
+        "200":
+          description: Genres list
+          content:
+            application/json:
+              schema:
+                type: array
+                description: List of genres
+                items:
+                  type: string
+                example: [ 'Comedy', 'Drama', 'Romance' ]
+
 servers:
   - url: http://localhost:4000/
 components:
