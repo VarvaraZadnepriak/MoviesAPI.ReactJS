@@ -6,6 +6,7 @@ const koaSwagger = require('koa2-swagger-ui')
 const { parseQuery } = require('./utils')
 const swaggerApi = require('./api/swagger.api')
 const movieApi = require('./api/movie.api')
+const genreApi = require('./api/genre.api')
 
 const app = new Koa()
   .use(cors())
@@ -23,5 +24,7 @@ const app = new Koa()
   .use(swaggerApi.allowedMethods())
   .use(movieApi.routes())
   .use(movieApi.allowedMethods())
+  .use(genreApi.routes())
+  .use(genreApi.allowedMethods())
 
 module.exports = exports = app
